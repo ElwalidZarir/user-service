@@ -26,5 +26,4 @@ public class UserService {
         userRepository.save(user);
         return new UserDTO(user.getUsername(), user.getEmail());
     }
-
 }

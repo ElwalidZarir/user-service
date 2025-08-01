@@ -7,7 +7,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.5.4</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath />
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>user-service</artifactId>
@@ -71,6 +71,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-mysql</artifactId>
+			<version>10.10.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -97,6 +102,22 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>10.10.0</version>
+				<configuration>
+					<url>jdbc:mysql://localhost:3306/user_service_db</url>
+					<user>root</user>
+					<password>root</password>
+					<schemas>
+						<schema>public</schema>
+					</schemas>
+					<locations>
+						<location>classpath:db/migration</location>
+					</locations>
 				</configuration>
 			</plugin>
 		</plugins>

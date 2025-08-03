@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.user_service.dto.RegisterRequest;
+import com.example.user_service.dto.RegisterResponse;
 import com.example.user_service.dto.UserDTO;
 import com.example.user_service.model.User;
 import com.example.user_service.service.UserService;
@@ -24,8 +25,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody RegisterRequest request) {
-        UserDTO createdUser = userService.createUser(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+    public RegisterResponse createUser(@Valid @RequestBody RegisterRequest user) {
+        return userService.createUser(user);
     }
 }

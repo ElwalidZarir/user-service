@@ -1,6 +1,6 @@
 package com.example.user_service.dto;
 
-public record Experience(
+public record ExperienceDTO(
         String companyName,
         String jobTitle,
         String startDate,

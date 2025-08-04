@@ -6,5 +6,6 @@ import com.example.user_service.model.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
     boolean existsByEmail(String email);
-    
+    boolean existsByUsername(String username);
+    User findById(int id);
 }

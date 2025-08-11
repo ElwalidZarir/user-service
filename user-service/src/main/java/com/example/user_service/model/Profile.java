@@ -18,7 +18,7 @@ public class Profile {
     private String bio;
     private String location;
     private String website;
-    private String phoneNumber; 
+    private String phoneNumber;
 
     @OneToOne
     @MapsId

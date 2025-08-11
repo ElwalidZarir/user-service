@@ -18,15 +18,13 @@ public class ProfileService {
     @Autowired
     private UserRepository userRepository;
 
-    public Profile createProfile(ProfileDTO profileDTO, int userId) {
+    public Profile createProfile(ProfileDTO profileDTO) {
         try {
-            User user = userRepository.findById(userId);
             Profile profile = new Profile();
             profile.setBio(profileDTO.bio());
             profile.setLocation(profileDTO.location());
             profile.setWebsite(profileDTO.website());
             profile.setPhoneNumber(profileDTO.phoneNumber());
-            profile.setUser(user);
             return profileRepository.save(profile);
         } catch (Exception e) {
             throw new RuntimeException("Error creating profile: " + e.getMessage());

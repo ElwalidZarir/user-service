@@ -1,11 +1,15 @@
 package com.example.user_service.service;
 
+import java.util.Optional;
+
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.user_service.dto.RegisterRequestDTO;
-import com.example.user_service.dto.RegisterResponseDTO;
+import com.example.user_service.dto.RegisterDTO;
+import com.example.user_service.dto.ResponseDTO;
 import com.example.user_service.dto.UserDTO;
+import com.example.user_service.exception.GetUserException;
 import com.example.user_service.exception.UserAlreadyExistException;
 import com.example.user_service.model.User;
 import com.example.user_service.repository.UserRepository;
@@ -15,7 +19,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public RegisterResponseDTO createUser(RegisterRequestDTO request) throws UserAlreadyExistException {
+    public ResponseDTO<User> createUser(RegisterDTO request) throws UserAlreadyExistException {
 
         if (userRepository.existsByEmail(request.email()) || userRepository.existsByUsername(request.username())) {
             throw new UserAlreadyExistException("User with this email or username already exists");
@@ -25,9 +29,12 @@ public class UserService {
         user.setEmail(request.email());
         user.setPassword(request.password());
         userRepository.save(user);
-        System.out.println("User created successfully: " + user);
-        return new RegisterResponseDTO(null, "User created successfully");
-
+        return new ResponseDTO<>(200, null, "User created successfully", Optional.of(user));
     }
 
+    public UserDTO getUser(String username) throws GetUserException {
+        if (username != null)
+            return userRepository.getUserByUsername(username);
+        throw new GetUserException("no username or other error getting user");
+    }
 }

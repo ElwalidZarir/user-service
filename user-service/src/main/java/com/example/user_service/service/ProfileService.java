@@ -5,7 +5,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import com.example.user_service.controller.ProfileController;
+import com.example.user_service.dto.ResponseDTO;
 import com.example.user_service.dto.ProfileDTO;
+import com.example.user_service.exception.ProfileCreationFailed;
 import com.example.user_service.model.Profile;
 import com.example.user_service.model.User;
 import com.example.user_service.repository.ProfileRepository;
@@ -18,17 +20,16 @@ public class ProfileService {
     @Autowired
     private UserRepository userRepository;
 
-    public Profile createProfile(ProfileDTO profileDTO) {
-        try {
-            Profile profile = new Profile();
-            profile.setBio(profileDTO.bio());
-            profile.setLocation(profileDTO.location());
-            profile.setWebsite(profileDTO.website());
-            profile.setPhoneNumber(profileDTO.phoneNumber());
-            return profileRepository.save(profile);
-        } catch (Exception e) {
-            throw new RuntimeException("Error creating profile: " + e.getMessage());
-        }
-
-    }
+ /*    public ResponseDTO createProfile(ProfileDTO profileDTO) throws ProfileCreationFailed {
+        if(profileDTO==null){
+            throw new ProfileCreationFailed("profile data can't be null");
+        }   
+        Profile profile = new Profile();
+        profile.setBio(profileDTO.bio());
+        profile.setLocation(profileDTO.location());
+        profile.setWebsite(profileDTO.website());
+        profile.setPhoneNumber(profileDTO.phoneNumber());
+        profileRepository.save(profile);
+        return new ResponseDTO(null, "profile succesfuly created");
+    } */
 }
